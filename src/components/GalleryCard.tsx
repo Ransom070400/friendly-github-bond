@@ -6,14 +6,18 @@ import { cn } from '@/lib/utils';
 interface GalleryCardProps {
   image: GalleryImage;
   onClick: () => void;
+  className?: string;
 }
 
-const GalleryCard = ({ image, onClick }: GalleryCardProps) => {
+const GalleryCard = ({ image, onClick, className }: GalleryCardProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
     <div 
-      className="group relative overflow-hidden rounded-lg cursor-pointer hover-lift"
+      className={cn(
+        "group relative overflow-hidden rounded-lg cursor-pointer hover-lift",
+        className
+      )}
       onClick={onClick}
     >
       <div className="relative aspect-[4/3] overflow-hidden rounded-lg">

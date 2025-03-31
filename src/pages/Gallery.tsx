@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, Grid3X3, Grid2X2, ImageIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Logo from '@/components/Logo';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { useMediaQuery } from '@/hooks/use-mobile';
 
 const Gallery = () => {
@@ -51,7 +50,7 @@ const Gallery = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="flex-1 pt-20 md:pt-24 pb-16">
+      <main className="flex-1 pt-20 md:pt-24 pb-16 overflow-y-auto">
         <div className="container px-4 sm:px-6">
           <div className="mb-6 md:mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
@@ -109,40 +108,36 @@ const Gallery = () => {
                     </div>
                   </div>
                   
-                  <ScrollArea className="h-auto md:max-h-[calc(100vh-300px)]">
-                    <GalleryFilters
-                      years={years}
-                      onCategoryChange={setActiveCategory}
-                      onYearChange={setActiveYear}
-                      activeCategory={activeCategory}
-                      activeYear={activeYear}
-                    />
-                  </ScrollArea>
+                  <GalleryFilters
+                    years={years}
+                    onCategoryChange={setActiveCategory}
+                    onYearChange={setActiveYear}
+                    activeCategory={activeCategory}
+                    activeYear={activeYear}
+                  />
                 </div>
               </div>
             )}
             
-            <div className={`${isMobile ? 'w-full' : 'md:w-3/4'}`}>
+            <div className={`${isMobile ? 'w-full' : 'md:w-3/4'} overflow-y-auto`}>
               {filteredImages.length === 0 ? (
                 <div className="text-center py-20">
                   <p className="text-lg text-muted-foreground">No images found with the selected filters.</p>
                 </div>
               ) : (
-                <ScrollArea className="h-auto md:max-h-[calc(100vh-200px)] pr-4">
-                  <div className={`${layoutMode === 'grid' 
-                    ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6' 
-                    : 'columns-1 sm:columns-2 lg:columns-3 gap-4 md:gap-6 space-y-4 md:space-y-6'}`}
-                  >
-                    {filteredImages.map(image => (
-                      <GalleryCard
-                        key={image.id}
-                        image={image}
-                        onClick={() => setSelectedImage(image)}
-                        className={layoutMode === 'columns' ? 'mb-4 md:mb-6 break-inside-avoid' : ''}
-                      />
-                    ))}
-                  </div>
-                </ScrollArea>
+                <div className={`${layoutMode === 'grid' 
+                  ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6' 
+                  : 'columns-1 sm:columns-2 lg:columns-3 gap-4 md:gap-6 space-y-4 md:space-y-6'}`}
+                >
+                  {filteredImages.map(image => (
+                    <GalleryCard
+                      key={image.id}
+                      image={image}
+                      onClick={() => setSelectedImage(image)}
+                      className={layoutMode === 'columns' ? 'mb-4 md:mb-6 break-inside-avoid' : ''}
+                    />
+                  ))}
+                </div>
               )}
             </div>
           </div>
